@@ -96,6 +96,7 @@ def connect_to_ssh():
 
 @privileged.default.entrypoint
 def execute_process(cmd, _process_input, addl_env):
+    LOG.debug('Inside execute_process in priviled.py')
     obj, cmd = _create_process(cmd, addl_env=addl_env)
     _stdout, _stderr = obj.communicate(_process_input)
     returncode = obj.returncode
