@@ -28,7 +28,7 @@ from eventlet.green import subprocess
 from neutron_lib import exceptions
 from neutron_lib.utils import helpers
 from oslo_config import cfg
-from oslo_log import log as logging
+
 from oslo_rootwrap import client
 from oslo_utils import encodeutils
 from oslo_utils import excutils
@@ -39,7 +39,7 @@ from neutron.conf.agent import common as config
 from neutron.privileged.agent.linux import utils as priv_utils
 from neutron import wsgi
 
-
+from oslo_log import log as logging
 LOG = logging.getLogger(__name__)
 
 
