@@ -768,6 +768,11 @@ class IptablesManager(object):
         name = get_chain_name(chain, wrap)
         acc = {'pkts': 0, 'bytes': 0}
 
+        LOG.debug('Trying get_traffic_counters inside IPTABLES_MANAGER, with name: {name} and acc: {acc}'.format(
+            name=name,
+            acc=acc
+        ))
+
         for cmd, table in cmd_tables:
             args = [cmd, '-t', table, '-L', name, '-n', '-v', '-x',
                     '-w', self.xlock_wait_time]
