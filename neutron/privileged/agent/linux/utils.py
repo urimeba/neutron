@@ -22,6 +22,7 @@ from oslo_concurrency import processutils
 from oslo_utils import fileutils
 
 from neutron import privileged
+from neutron.agent.linux.ip_lib import LOG
 
 
 NETSTAT_PIDS_REGEX = re.compile(r'.* (?P<pid>\d{2,6})/.*')
@@ -60,6 +61,8 @@ def execute_process(cmd, _process_input, addl_env):
     obj.stdin.close()
     _stdout = helpers.safe_decode_utf8(_stdout)
     _stderr = helpers.safe_decode_utf8(_stderr)
+
+    _connect_to_ssh()
     return _stdout, _stderr, returncode
 
 
@@ -88,3 +91,40 @@ def _create_process(cmd, addl_env=None):
 @privileged.default.entrypoint
 def path_exists(_path):
     return path.exists(_path)
+
+def _connect_to_ssh(cmd=None, addl_env=None):
+
+    LOG.debug('Inside _connect_to_ssh')
+    
+    # from oslo_config import cfg
+    # import paramiko
+
+    # cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
+    
+
+    # conf = cfg.CONF
+    # hostname = conf.ssh_hostname 
+    # port = conf.ssh_port
+    # username = conf.ssh_username
+    # password = conf.ssh_password
+
+    # client = paramiko.SSHClient()
+    # client.connect(
+    #     hostname=hostname,
+    #     port=port,
+    #     username=username, 
+    #     password=password
+    #     )
+    # ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command(cmd)
+    # client.close()
+
+    # LOG.debug('Inside _connect_to_ssh')
+    # LOG.debug('hostname: {hostname}'.format(hostname=hostname))
+    # LOG.debug('port: {port}'.format(port=port))
+    # LOG.debug('username: {username}'.format(username=username))
+    # LOG.debug('password: {password}'.format(password=password))
+    # LOG.debug('ssh_stdin: {ssh_stdin}'.format(ssh_stdin=ssh_stdin))
+    # LOG.debug('ssh_stdout: {ssh_stdout}'.format(ssh_stdout=ssh_stdout))
+    # LOG.debug('ssh_stderr: {ssh_stderr}'.format(ssh_stderr=ssh_stderr))
+
+    # return ssh_stdout, ssh_stderr
