@@ -459,6 +459,7 @@ class IptablesMeteringDriver(abstract_driver.MeteringAbstractDriver):
 
     @log_helpers.log_method_call
     def get_traffic_counters(self, context, routers):
+        LOG.debug('Inside get_traffic_counters in iptables_driver.py')
         traffic_counters = {}
         routers_to_reconfigure = set()
         for router in routers:
