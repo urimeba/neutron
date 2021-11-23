@@ -22,7 +22,8 @@ from oslo_concurrency import processutils
 from oslo_utils import fileutils
 
 from neutron import privileged
-from neutron.agent.linux.ip_lib import LOG
+from oslo_log import log as logging
+LOG = logging.getLogger(__name__)
 
 
 NETSTAT_PIDS_REGEX = re.compile(r'.* (?P<pid>\d{2,6})/.*')
