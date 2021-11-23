@@ -53,10 +53,11 @@ def delete_if_exists(_path, remove=os.unlink):
     fileutils.delete_if_exists(_path, remove=remove)
 
 
-
-def _connect_to_ssh(cmd=None, addl_env=None):
+@privileged.default.entrypoint
+def connect_to_ssh():
 
     LOG.debug('Inside _connect_to_ssh')
+    return 'Hola'
     
     # from oslo_config import cfg
     # import paramiko
@@ -94,16 +95,12 @@ def _connect_to_ssh(cmd=None, addl_env=None):
 
 @privileged.default.entrypoint
 def execute_process(cmd, _process_input, addl_env):
-    LOG.debug('Inside execute_process in utils.py')
-    _connect_to_ssh()
     obj, cmd = _create_process(cmd, addl_env=addl_env)
     _stdout, _stderr = obj.communicate(_process_input)
     returncode = obj.returncode
     obj.stdin.close()
     _stdout = helpers.safe_decode_utf8(_stdout)
     _stderr = helpers.safe_decode_utf8(_stderr)
-
-    
     return _stdout, _stderr, returncode
 
 
