@@ -107,7 +107,8 @@ class RouterWithMetering(object):
             # NOTE(Swami): If distributed routers, all external traffic on a
             # compute node will flow through the rfp interface in the router
             # namespace.
-            if ip_lib.network_namespace_exists(self.ns_name):
+            # if ip_lib.network_namespace_exists(self.ns_name):
+            if True:
                 self.iptables_manager = iptables_manager.IptablesManager(
                     namespace=self.ns_name,
                     binary_name=WRAP_NAME,
