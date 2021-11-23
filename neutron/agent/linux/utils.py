@@ -122,23 +122,31 @@ def execute(cmd, process_input=None, addl_env=None,
             check_exit_code=True, return_stderr=False, log_fail_as_error=True,
             extra_ok_codes=None, run_as_root=False, privsep_exec=False):
     try:
+        LOG.debug('Inside execute...')
+
         if process_input is not None:
+            LOG.debug('Inside execute IF-A')
             _process_input = encodeutils.to_utf8(process_input)
         else:
+            LOG.debug('Inside execute IF-B')
             _process_input = None
 
         if run_as_root and privsep_exec:
+            LOG.debug('Inside execute IF-C')
             _stdout, _stderr, returncode = priv_utils.execute_process(
                 cmd, _process_input, addl_env)
         elif run_as_root and cfg.CONF.AGENT.root_helper_daemon:
+            LOG.debug('Inside execute IF-D')
             _stdout, _stderr, returncode = execute_rootwrap_daemon(
                 cmd, process_input, addl_env)
         else:
+            LOG.debug('Inside execute IF-E')
             _stdout, _stderr, returncode = _execute_process(
                 cmd, _process_input, addl_env, run_as_root)
 
         extra_ok_codes = extra_ok_codes or []
         if returncode and returncode not in extra_ok_codes:
+            LOG.debug('Inside execute IF-F')
             msg = ("Exit code: %(returncode)d; "
                    "Cmd: %(cmd)s; "
                    "Stdin: %(stdin)s; "
@@ -151,8 +159,10 @@ def execute(cmd, process_input=None, addl_env=None,
                         'stderr': _stderr})
 
             if log_fail_as_error:
+                LOG.debug('Inside execute IF-G')
                 LOG.error(msg)
             if check_exit_code:
+                LOG.debug('Inside execute IF-H')
                 raise exceptions.ProcessExecutionError(msg,
                                                        returncode=returncode)
     finally:
