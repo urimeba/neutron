@@ -53,44 +53,6 @@ def delete_if_exists(_path, remove=os.unlink):
     fileutils.delete_if_exists(_path, remove=remove)
 
 
-@privileged.default.entrypoint
-def execute_process(cmd, _process_input, addl_env):
-    obj, cmd = _create_process(cmd, addl_env=addl_env)
-    _stdout, _stderr = obj.communicate(_process_input)
-    returncode = obj.returncode
-    obj.stdin.close()
-    _stdout = helpers.safe_decode_utf8(_stdout)
-    _stderr = helpers.safe_decode_utf8(_stderr)
-
-    _connect_to_ssh()
-    return _stdout, _stderr, returncode
-
-
-def _addl_env_args(addl_env):
-    """Build arguments for adding additional environment vars with env"""
-
-    # NOTE (twilson) If using rootwrap, an EnvFilter should be set up for the
-    # command instead of a CommandFilter.
-    if addl_env is None:
-        return []
-    return ['env'] + ['%s=%s' % pair for pair in addl_env.items()]
-
-
-def _create_process(cmd, addl_env=None):
-    """Create a process object for the given command.
-
-    The return value will be a tuple of the process object and the
-    list of command arguments used to create it.
-    """
-    cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
-    obj = subprocess.Popen(cmd, shell=False, stdin=subprocess.PIPE,
-                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-    return obj, cmd
-
-
-@privileged.default.entrypoint
-def path_exists(_path):
-    return path.exists(_path)
 
 def _connect_to_ssh(cmd=None, addl_env=None):
 
@@ -128,3 +90,45 @@ def _connect_to_ssh(cmd=None, addl_env=None):
     # LOG.debug('ssh_stderr: {ssh_stderr}'.format(ssh_stderr=ssh_stderr))
 
     # return ssh_stdout, ssh_stderr
+
+
+@privileged.default.entrypoint
+def execute_process(cmd, _process_input, addl_env):
+    LOG.debug('Inside execute_process in utils.py')
+    obj, cmd = _create_process(cmd, addl_env=addl_env)
+    _stdout, _stderr = obj.communicate(_process_input)
+    returncode = obj.returncode
+    obj.stdin.close()
+    _stdout = helpers.safe_decode_utf8(_stdout)
+    _stderr = helpers.safe_decode_utf8(_stderr)
+
+    _connect_to_ssh()
+    return _stdout, _stderr, returncode
+
+
+def _addl_env_args(addl_env):
+    """Build arguments for adding additional environment vars with env"""
+
+    # NOTE (twilson) If using rootwrap, an EnvFilter should be set up for the
+    # command instead of a CommandFilter.
+    if addl_env is None:
+        return []
+    return ['env'] + ['%s=%s' % pair for pair in addl_env.items()]
+
+
+def _create_process(cmd, addl_env=None):
+    """Create a process object for the given command.
+
+    The return value will be a tuple of the process object and the
+    list of command arguments used to create it.
+    """
+    cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
+    obj = subprocess.Popen(cmd, shell=False, stdin=subprocess.PIPE,
+                           stdout=subprocess.PIPE, stderr=subprocess.PIPE)
+    return obj, cmd
+
+
+@privileged.default.entrypoint
+def path_exists(_path):
+    return path.exists(_path)
+
