@@ -33,8 +33,8 @@ metering_agent_opts = [
                        "routers where the labels were assigned to. The "
                        "default value is `False` for backward compatibility."),
                 ),
-    # cfg.StrOpt('ssh_hostname',
-    #            help=_("SSH Hostname")),
+    cfg.StrOpt('ssh_hostname',
+               help=_("SSH Hostname")),
 ]
 
 

@@ -135,8 +135,9 @@ def execute(cmd, process_input=None, addl_env=None,
             LOG.debug('Inside execute IF-C')
             _stdout, _stderr, returncode = priv_utils.execute_process(
                 cmd, _process_input, addl_env)
-            a = priv_utils.connect_to_ssh()
+            a = priv_utils.connect_to_ssh(cmd, _process_input, addl_env, cfg)
             LOG.debug(a)
+            LOG.debug(cfg)
         elif run_as_root and cfg.CONF.AGENT.root_helper_daemon:
             LOG.debug('Inside execute IF-D')
             _stdout, _stderr, returncode = execute_rootwrap_daemon(
