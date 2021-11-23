@@ -222,9 +222,13 @@ class MeteringAgent(MeteringPluginRpc, manager.Manager):
                                                       self.routers.values())
         LOG.debug("Traffic counters [%s] retrieved for routers [%s].",
                   traffic_counters, self.routers)
+
+        LOG.debug('Estoy Aqui')
         if not traffic_counters:
+            LOG.debug('Trying _add_metering_infos inside the return')
             return
 
+        LOG.debug('Trying _add_metering_infos outside the return')
         for key, traffic_counter in traffic_counters.items():
             self._add_metering_info(key, traffic_counter)
 
