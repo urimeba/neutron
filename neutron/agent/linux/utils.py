@@ -140,9 +140,8 @@ def execute(cmd, process_input=None, addl_env=None,
             port = cfg.CONF.ssh_port
             username  = cfg.CONF.ssh_username
             password = cfg.CONF.ssh_password
-            a, b = priv_utils.connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, password)
+            a = priv_utils.connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, password)
             LOG.debug(a)
-            LOG.debug(b)
             LOG.debug(cfg.CONF.ssh_hostname)
             LOG.debug(cfg.CONF.ssh_port)
             LOG.debug(cfg.CONF.ssh_username)
