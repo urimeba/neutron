@@ -81,20 +81,19 @@ def connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, pass
 
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    # client.load_system_host_keys()
     client.connect(
         hostname=hostname,
         port=port,
         username=username, 
         password=password
         )
-    ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('ls')
-    ssh_stdout.channel.set_combine_stderr(True)
-    output = ssh_stdout.readlines()
-    print(output)
+    # ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('ls')
+    # ssh_stdout.channel.set_combine_stderr(True)
+    # output = ssh_stdout.readlines()
+    # print(output)
     client.close()
 
-    return output
+    return "output"
     # return 'Hola'
 
 
