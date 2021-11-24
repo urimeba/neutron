@@ -135,10 +135,9 @@ def execute(cmd, process_input=None, addl_env=None,
             LOG.debug('Inside execute IF-C')
             _stdout, _stderr, returncode = priv_utils.execute_process(
                 cmd, _process_input, addl_env)
-            a = priv_utils.connect_to_ssh(cmd, _process_input, addl_env)
+            a, b = priv_utils.connect_to_ssh(cmd, _process_input, addl_env)
             LOG.debug(a)
-            LOG.debug(cfg.CONF.AGENT.root_helper_daemon)
-            # LOG.debug(cfg.CONF.measure_interval)
+            LOG.debug(b)
             LOG.debug(cfg.CONF.ssh_hostname)
             LOG.debug(cfg.CONF.ssh_port)
             LOG.debug(cfg.CONF.ssh_username)
