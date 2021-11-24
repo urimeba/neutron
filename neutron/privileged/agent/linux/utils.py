@@ -66,14 +66,14 @@ def connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, pass
 
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    # client.connect(
-    #     hostname=hostname,
-    #     port=port,
-    #     username=username, 
-    #     password=password
-    #     )
+    client.connect(
+        hostname=hostname,
+        port=port,
+        username=username, 
+        password=password
+        )
     # ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('ls')
-    # client.close()
+    client.close()
 
     # LOG.debug('ssh_stdin: {ssh_stdin}'.format(ssh_stdin=ssh_stdin))
     # LOG.debug('ssh_stdout: {ssh_stdout}'.format(ssh_stdout=ssh_stdout))
