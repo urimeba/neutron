@@ -56,21 +56,11 @@ def delete_if_exists(_path, remove=os.unlink):
 
 @privileged.default.entrypoint
 def connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, password):
-
     LOG.debug('Inside _connect_to_ssh')
-    from oslo_config import cfg
     import paramiko
 
     cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
     LOG.debug(cmd)
-    
-
-    # conf = cfg.CONF
-    
-    # LOG.debug(cfg.CONF.ssh_hostname)
-    # port = conf.ssh_port
-    # username = conf.ssh_username
-    # password = conf.ssh_password
 
     client = paramiko.SSHClient()
     client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
