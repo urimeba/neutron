@@ -64,8 +64,8 @@ def connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, pass
 
     LOG.debug(cmd)
 
-    # client = paramiko.SSHClient()
-    # client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    client = paramiko.SSHClient()
+    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
     # client.connect(
     #     hostname=hostname,
     #     port=port,
