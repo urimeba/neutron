@@ -35,6 +35,15 @@ metering_agent_opts = [
                 ),
     cfg.StrOpt('ssh_hostname',
                help=_("SSH Hostname")),
+               
+    cfg.StrOpt('ssh_port',
+               help=_("SSH Hostname")),
+
+    cfg.StrOpt('ssh_username',
+               help=_("SSH Hostname")),
+
+    cfg.StrOpt('ssh_password',
+               help=_("SSH Hostname")),
 ]
 
 
