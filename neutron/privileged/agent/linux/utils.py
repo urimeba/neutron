@@ -61,35 +61,35 @@ def connect_to_ssh(cmd, _process_input, addl_env):
     from oslo_config import cfg
     import paramiko
 
-    cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
+    # cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
     
 
-    conf = cfg.CONF
+    # conf = cfg.CONF
     
-    hostname = conf.ssh_hostname 
-    port = conf.ssh_port
-    username = conf.ssh_username
-    password = conf.ssh_password
+    # hostname = conf.ssh_hostname 
+    # port = conf.ssh_port
+    # username = conf.ssh_username
+    # password = conf.ssh_password
 
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    client.connect(
-        hostname=hostname,
-        port=port,
-        username=username, 
-        password=password
-        )
-    ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('ls')
-    client.close()
+    # client = paramiko.SSHClient()
+    # client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+    # client.connect(
+    #     hostname=hostname,
+    #     port=port,
+    #     username=username, 
+    #     password=password
+    #     )
+    # ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('ls')
+    # client.close()
 
-    LOG.debug('Inside _connect_to_ssh')
-    LOG.debug('hostname: {hostname}'.format(hostname=hostname))
-    LOG.debug('port: {port}'.format(port=port))
-    LOG.debug('username: {username}'.format(username=username))
-    LOG.debug('password: {password}'.format(password=password))
-    LOG.debug('ssh_stdin: {ssh_stdin}'.format(ssh_stdin=ssh_stdin))
-    LOG.debug('ssh_stdout: {ssh_stdout}'.format(ssh_stdout=ssh_stdout))
-    LOG.debug('ssh_stderr: {ssh_stderr}'.format(ssh_stderr=ssh_stderr))
+    # LOG.debug('Inside _connect_to_ssh')
+    # LOG.debug('hostname: {hostname}'.format(hostname=hostname))
+    # LOG.debug('port: {port}'.format(port=port))
+    # LOG.debug('username: {username}'.format(username=username))
+    # LOG.debug('password: {password}'.format(password=password))
+    # LOG.debug('ssh_stdin: {ssh_stdin}'.format(ssh_stdin=ssh_stdin))
+    # LOG.debug('ssh_stdout: {ssh_stdout}'.format(ssh_stdout=ssh_stdout))
+    # LOG.debug('ssh_stderr: {ssh_stderr}'.format(ssh_stderr=ssh_stderr))
 
     # return ssh_stdout, ssh_stderr
     return 'Hola'
