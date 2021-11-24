@@ -59,7 +59,9 @@ def connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, pass
     LOG.debug('Inside _connect_to_ssh')
     import paramiko
 
-    cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
+    # cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
+    cmd = ' '.join(cmd)
+
     LOG.debug(cmd)
 
     client = paramiko.SSHClient()
