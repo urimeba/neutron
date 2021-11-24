@@ -66,7 +66,7 @@ def connect_to_ssh(cmd, _process_input, addl_env):
 
     # conf = cfg.CONF
     
-    # hostname = conf.ssh_hostname 
+    LOG.debug(cfg.CONF.ssh_hostname)
     # port = conf.ssh_port
     # username = conf.ssh_username
     # password = conf.ssh_password
