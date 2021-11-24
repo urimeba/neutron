@@ -57,7 +57,7 @@ def delete_if_exists(_path, remove=os.unlink):
 @privileged.default.entrypoint
 def connect_to_ssh(cmd, _process_input, addl_env):
 
-    LOG.debug('Inside _connect_to_ssh')
+    # LOG.debug('Inside _connect_to_ssh')
     return 'Hola'
     
     # from oslo_config import cfg
