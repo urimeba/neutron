@@ -56,45 +56,31 @@ def delete_if_exists(_path, remove=os.unlink):
 
 @privileged.default.entrypoint
 def connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, password):
-    LOG.debug('Inside _connect_to_ssh')
-    import paramiko
+    try:
+        LOG.debug('Inside _connect_to_ssh')
+        import paramiko
+        cmd = ' '.join(cmd)
 
-    # cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
-    cmd = ' '.join(cmd)
+        LOG.debug(cmd)
 
-    LOG.debug(cmd)
+        client = paramiko.SSHClient()
+        client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
+        # client.connect(
+        #     hostname=hostname,
+        #     port=port,
+        #     username=username, 
+        #     password=password
+        #     )
+        # ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('ls')
+        # ssh_stdout.channel.set_combine_stderr(True)
+        # output = ssh_stdout.readlines()
+        # print(output)
+        client.close()
 
-    # client = paramiko.SSHClient()
-    # client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    # client.connect(
-    #     hostname=hostname,
-    #     port=port,
-    #     username=username, 
-    #     password=password
-    #     )
-    # ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('ls')
-    # client.close()
-
-    # LOG.debug('ssh_stdin: {ssh_stdin}'.format(ssh_stdin=ssh_stdin))
-    # LOG.debug('ssh_stdout: {ssh_stdout}'.format(ssh_stdout=ssh_stdout))
-    # LOG.debug('ssh_stderr: {ssh_stderr}'.format(ssh_stderr=ssh_stderr))
-
-    client = paramiko.SSHClient()
-    client.set_missing_host_key_policy(paramiko.AutoAddPolicy())
-    # client.connect(
-    #     hostname=hostname,
-    #     port=port,
-    #     username=username, 
-    #     password=password
-    #     )
-    # ssh_stdin, ssh_stdout, ssh_stderr = client.exec_command('ls')
-    # ssh_stdout.channel.set_combine_stderr(True)
-    # output = ssh_stdout.readlines()
-    # print(output)
-    client.close()
-
-    return "output"
-    # return 'Hola'
+        return "output"
+    except Exception as e:
+        import traceback
+        return traceback.format_exc()
 
 
 @privileged.default.entrypoint
