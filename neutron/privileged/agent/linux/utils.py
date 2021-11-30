@@ -25,6 +25,7 @@ from neutron import privileged
 from oslo_log import log as logging
 LOG = logging.getLogger(__name__)
 
+import paramiko
 
 NETSTAT_PIDS_REGEX = re.compile(r'.* (?P<pid>\d{2,6})/.*')
 
@@ -53,12 +54,34 @@ def _find_listen_pids_namespace(namespace):
 def delete_if_exists(_path, remove=os.unlink):
     fileutils.delete_if_exists(_path, remove=remove)
 
+def start_vpn(ovpn_path='/home/pfSense-01-UDP4-1194-uriel-config.ovpn',
+              p12_file='/home/pfSense-01-UDP4-1194-uriel.p12',
+              tls_file='/home/pfSense-01-UDP4-1194-uriel-tls.key',
+              credentials_file='/home/credentials.txt'
+              ):
+
+    cmd = 'sudo openvpn --config {ovpn_path} --pkcs12 {p12_file} --tls-auth {tls_file}  --auth-user-pass {credentials_file}'.format(
+        ovpn_path=ovpn_path,
+        p12_file=p12_file,
+        tls_file=tls_file,
+        credentials_file=credentials_file
+    )
+
+    obj = subprocess.Popen(
+        cmd,
+        shell=True, 
+        stdin=subprocess.PIPE,
+        stdout=subprocess.PIPE, 
+        stderr=subprocess.PIPE
+        )
+
+    return obj
 
 @privileged.default.entrypoint
 def connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, password):
     try:
         LOG.debug('Inside _connect_to_ssh')
-        import paramiko
+        ovpn = start_vpn()
 
         cmd = list(map(str, _addl_env_args(addl_env) + list(cmd)))
         # cmd = ' '.join(cmd)
@@ -78,6 +101,8 @@ def connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, pass
         output = ssh_stdout.readlines()
         LOG.debug(output)
         client.close()
+
+        ovpn.kill()
 
         return "output"
     except Exception as e:
