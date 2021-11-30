@@ -137,6 +137,7 @@ def execute(cmd, process_input=None, addl_env=None,
                 cmd, _process_input, addl_env)
             
             LOG.debug('this is the SSH info:')
+            LOG.debug(cfg.CONF.__dict__)
             hostname = cfg.CONF.ssh_hostname
             port = cfg.CONF.ssh_port
             username  = cfg.CONF.ssh_username
