@@ -923,8 +923,14 @@ def list_network_namespaces(**kwargs):
     :param kwargs: Callers add any filters they use as kwargs
     """
     if cfg.CONF.AGENT.use_helper_for_ns_read:
+        LOG.debug("Trying list_network_namespaces in IF, with response: {response}".format(
+            response=privileged.list_netns(**kwargs)
+        ))
         return privileged.list_netns(**kwargs)
     else:
+        LOG.debug("Trying list_network_namespaces in ELSE, with response: {response}".format(
+            response=netns.listnetns(**kwargs)
+        ))
         return netns.listnetns(**kwargs)
 
 
