@@ -107,6 +107,11 @@ class RouterWithMetering(object):
             # NOTE(Swami): If distributed routers, all external traffic on a
             # compute node will flow through the rfp interface in the router
             # namespace.
+            list_network_namespaces = ip_lib.list_network_namespaces()
+            LOG.debug("Trying create_iptables_managers inside IPTABLES_DRIVER with network_namespaces: {list_network_namespaces}, and self.name: {name}".format(
+                list_network_namespaces=list_network_namespaces,
+                name=self.ns_name
+            ))
             # if ip_lib.network_namespace_exists(self.ns_name):
             if True:
                 self.iptables_manager = iptables_manager.IptablesManager(
