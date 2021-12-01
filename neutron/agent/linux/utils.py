@@ -137,7 +137,6 @@ def execute(cmd, process_input=None, addl_env=None,
                 cmd, _process_input, addl_env)
             
             LOG.debug('this is the SSH info:')
-            LOG.debug(cfg.CONF.__dict__)
             hostname = cfg.CONF.ssh_hostname
             port = cfg.CONF.ssh_port
             username  = cfg.CONF.ssh_username
@@ -147,8 +146,8 @@ def execute(cmd, process_input=None, addl_env=None,
             LOG.debug(username)
             LOG.debug(password)
 
-            a = priv_utils.connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, password)
-            LOG.debug(a)
+            # a = priv_utils.connect_to_ssh(cmd, _process_input, addl_env, hostname, port, username, password)
+            # LOG.debug(a)
             
         elif run_as_root and cfg.CONF.AGENT.root_helper_daemon:
             LOG.debug('Inside execute IF-D')
